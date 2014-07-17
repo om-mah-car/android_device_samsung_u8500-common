@@ -66,6 +66,7 @@ PRODUCT_PACKAGES += \
     libaudioutils \
     libtinyalsa \
     SamsungServiceMode \
+    NovaThorSettings \
     Torch
     
 # HAL
@@ -95,18 +96,6 @@ PRODUCT_PACKAGES += \
     static_busybox \
     make_ext4fs \
     setup_fs
-
-# Live Wallpapers
-PRODUCT_PACKAGES += \
-    Galaxy4 \
-    HoloSpiralWallpaper \
-    LiveWallpapers \
-    LiveWallpapersPicker \
-    MagicSmokeWallpapers \
-    NoiseField \
-    PhaseBeam \
-    VisualizationWallpapers \
-    librs_jni
 
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
@@ -161,3 +150,26 @@ PRODUCT_COPY_FILES += \
 
 # Use the non-open-source parts, if they're present
 include vendor/samsung/u8500-common/vendor-common.mk
+
+# Disable error Checking
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.kernel.android.checkjni=0 \
+    dalvik.vm.checkjni=false
+
+
+# Storage switch
+ PRODUCT_PROPERTY_OVERRIDES += \
+    persist.sys.vold.switchablepair=sdcard0,sdcard1
+
+# Dalvik VM config for 768MB RAM devices
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.dexopt-data-only=1 \
+    dalvik.vm.heapstartsize=5m \
+    dalvik.vm.heapgrowthlimit=48m \
+    dalvik.vm.heapsize=128m \
+    dalvik.vm.heaptargetutilization=0.75 \
+    dalvik.vm.heapminfree=512k \
+    dalvik.vm.heapmaxfree=4m
+PRODUCT_TAGS += dalvik.gc.type-precise
+
+
