@@ -23,7 +23,8 @@ PRODUCT_AAPT_PREF_CONFIG := hdpi
 
 # NovaThor Settings
 PRODUCT_PACKAGES += \
-    NovaThorSettings
+    NovaThorSettings \
+    OmniTorch
 
 # U8500 Common init
 PRODUCT_COPY_FILES += \
