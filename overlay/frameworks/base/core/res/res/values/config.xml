@@ -189,10 +189,7 @@
     legacy USB manager should be started. -->
     <string name="config_legacyUmsLunFile">/sys/devices/virtual/android_usb/android0/f_mass_storage/lun0/file</string>
 
-    <!-- Device supports LED flashlight -->
-    <bool name="config_enableTorch">true</bool>
-	
-	<!-- Disable the home key unlock setting -->
+    <!-- Disable the home key unlock setting -->
     <bool name="config_disableHomeUnlockSetting">false</bool>
 
     <!-- Boolean to enable stk functionality on Samsung phones -->
