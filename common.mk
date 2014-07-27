@@ -18,7 +18,7 @@ COMMON_PATH := device/samsung/u8500-common
 DEVICE_PACKAGE_OVERLAYS := $(COMMON_PATH)/overlay
 
 # Use the Dalvik VM specific for devices with 512 MB of RAM
-$(call inherit-product, frameworks/native/build/phone-hdpi-512-dalvik-heap.mk)
+# $(call inherit-product, frameworks/native/build/phone-hdpi-512-dalvik-heap.mk)
 
 # Our devices are HDPI
 PRODUCT_AAPT_CONFIG := normal hdpi
@@ -72,7 +72,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.ril.gprsclass=10 \
     mobiledata.interfaces=pdp0,wlan0,gprs,ppp0 \
     ro.telephony.ril_class=SamsungU8500RIL \
-    ro.telephony.sends_barcount=1
+    ro.telephony.sends_barcount=1 \
+    ro.telephony.call_ring.delay=500
 
 # Audio
 PRODUCT_COPY_FILES += \
@@ -96,7 +97,8 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 
 # Charger
 PRODUCT_COPY_FILES += \
-    $(COMMON_PATH)/rootdir/lpm.rc:root/lpm.rc
+    $(COMMON_PATH)/rootdir/lpm.rc:root/lpm.rc \
+$(COMMON_PATH)/rootdir/twrp.fstab:recovery/root/etc/twrp.fstab
 PRODUCT_PACKAGES += \
     charger \
     charger_res_images
@@ -176,6 +178,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.heapminfree=512k \
     dalvik.vm.heapmaxfree=4m
 PRODUCT_TAGS += dalvik.gc.type-precise
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.dexopt-data-only=1
+
 
 # Use the non-open-source parts, if they're present
 include vendor/samsung/u8500-common/vendor-common.mk
