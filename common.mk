@@ -148,6 +148,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.kernel.android.checkjni=0 \
     dalvik.vm.checkjni=false
 
+# SELinux
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.boot.selinux=permissive
+
 # Storage switch
  PRODUCT_PROPERTY_OVERRIDES += \
     ro.vold.switchablepair=/storage/sdcard0,/storage/sdcard1

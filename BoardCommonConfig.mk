@@ -111,3 +111,18 @@ BOARD_SUPPRESS_EMMC_WIPE := true
 BOARD_RECOVERY_SWIPE := true
 RECOVERY_FSTAB_VERSION := 2
 
+# SELinux
+BOARD_SEPOLICY_DIRS += \
+    device/samsung/u8500-common/selinux
+
+BOARD_SEPOLICY_UNION += \
+    device.te \
+    file.te \
+    rild.te \
+    drmserver.te \
+    ueventd.te \
+    domain.te \
+    system.te \
+    file_contexts \
+    wpa_supplicant.te \
+    vold.te
