@@ -17,9 +17,6 @@ COMMON_PATH := device/samsung/u8500-common
 
 DEVICE_PACKAGE_OVERLAYS := $(COMMON_PATH)/overlay
 
-# Use the Dalvik VM specific for devices with 512 MB of RAM
-$(call inherit-product, frameworks/native/build/phone-hdpi-512-dalvik-heap.mk)
-
 # Our devices are HDPI
 PRODUCT_AAPT_CONFIG := normal hdpi
 PRODUCT_AAPT_PREF_CONFIG := hdpi
@@ -29,11 +26,8 @@ PRODUCT_PACKAGES += \
     NovaThorSettings
 
 # Graphics
-PRODUCT_PACKAGES += \
-    libblt_hw
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.opengles.version=131072 \
-    persist.sys.strictmode.disable=1 \
     debug.sf.hw=1 \
     debug.hwui.render_dirty_regions=false
 
@@ -42,8 +36,6 @@ PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/configs/omxloaders:system/etc/omxloaders \
     $(COMMON_PATH)/configs/media_codecs.xml:system/etc/media_codecs.xml \
     $(COMMON_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml
-PRODUCT_PACKAGES += \
-    libomxil-bellagio
 
 # Wifi
 PRODUCT_COPY_FILES += \
@@ -53,13 +45,11 @@ PRODUCT_PACKAGES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     wifi.interface=wlan0 \
     wifi.supplicant_scan_interval=150
-
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4330/device-bcm.mk)
 
 # Bluetooth
 PRODUCT_COPY_FILES += \
-    $(COMMON_PATH)/bluetooth/bt_vendor.conf:system/etc/bluetooth/bt_vendor.conf \
-    system/bluetooth/data/main.le.conf:system/etc/bluetooth/main.conf
+    $(COMMON_PATH)/bluetooth/bt_vendor.conf:system/etc/bluetooth/bt_vendor.conf
 
 # STE
 PRODUCT_COPY_FILES += \
@@ -70,24 +60,23 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.ril.hsxpa=1 \
     ro.ril.gprsclass=10 \
-    mobiledata.interfaces=pdp0,wlan0,gprs,ppp0 \
     ro.telephony.ril_class=SamsungU8500RIL \
-    ro.telephony.sends_barcount=1
+    ro.telephony.sends_barcount=1 \
+    mobiledata.interfaces=pdp0,wlan0,gprs,ppp0
 
 # Audio
 PRODUCT_COPY_FILES += \
+    $(COMMON_PATH)/configs/audio_policy.conf:system/etc/audio_policy.conf \
     $(COMMON_PATH)/configs/asound.conf:system/etc/asound.conf
 PRODUCT_PACKAGES += \
-    audio.a2dp.default \
     audio.usb.default \
+    audio.a2dp.default \
+    audio.r_submix.default \
     libaudioutils \
     libtinyalsa
 
-$(call inherit-product, device/samsung/u8500-common/opensource/libasound/alsa-lib-products.mk)
-
-# Montblanc libs
-PRODUCT_PACKAGES += \
-    lights.montblanc
+# U8500 Hardware
+$(call inherit-product, hardware/u8500/u8500.mk)
 
 # USB
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
@@ -105,7 +94,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory \
     SamsungServiceMode \
-    CMAccount \
     Torch
 
 # Filesystem management tools
@@ -148,27 +136,20 @@ PRODUCT_COPY_FILES += \
 
 # Live Wallpapers
 PRODUCT_PACKAGES += \
-    Galaxy4 \
-    HoloSpiralWallpaper \
-    LiveWallpapers \
-    LiveWallpapersPicker \
-    MagicSmokeWallpapers \
-    NoiseField \
-    PhaseBeam \
-    VisualizationWallpapers \
     librs_jni
 
-# Error Checking
+# Disable error Checking
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.kernel.android.checkjni=0 \
     dalvik.vm.checkjni=false
 
 # Storage switch
  PRODUCT_PROPERTY_OVERRIDES += \
-        ro.vold.switchablepair=/storage/sdcard0,/storage/sdcard1
+    ro.vold.switchablepair=/storage/sdcard0,/storage/sdcard1
 
 # Dalvik VM config for 768MB RAM devices
 PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.dexopt-data-only=1 \
     dalvik.vm.heapstartsize=5m \
     dalvik.vm.heapgrowthlimit=48m \
     dalvik.vm.heapsize=128m \
