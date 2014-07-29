@@ -68,6 +68,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.telephony.ril_class=SamsungU8500RIL \
     ro.telephony.sends_barcount=1 \
     mobiledata.interfaces=pdp0,wlan0,gprs,ppp0
+    ro.telephony.call_ring.delay=500
 
 # Audio
 PRODUCT_COPY_FILES += \
@@ -169,3 +170,12 @@ PRODUCT_TAGS += dalvik.gc.type-precise
 
 # Use the non-open-source parts, if they're present
 include vendor/samsung/u8500-common/vendor-common.mk
+
+# Recovery
+PRODUCT_COPY_FILES += \
+$(COMMON_PATH)/rootdir/twrp.fstab:recovery/root/etc/twrp.fstab
+
+PRODUCT_PROPERTY_OVERRIDES += \
+     dalvik.vm.dexopt-data-only=1
+
+
