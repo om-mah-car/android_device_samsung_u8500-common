@@ -159,6 +159,6 @@ USE_SABERMOD_ANDROIDEABI_49 := true
 TARGET_USE_O3 := true
 STRICT_ALIASING := true
 SUPPRES_UNUSED_WARNING := true
-# OPT_MEMORY := true
+OPT_MEMORY := true
 BOOT_ZIP_OUT_FILE := SlimKernel-$(TARGET_DEVICE)-$(shell date +"%Y%m%d")
 
